@@ -61,6 +61,7 @@ public class TreeTraversals {
 
 
 
+
     void inOrder(Node root){
 
         if(root == null){
@@ -88,34 +89,73 @@ public class TreeTraversals {
 
 
     void printLevelOrder(Node root) {
+        int k;
         Queue<Node> queue = new LinkedList<>();
         queue.add(root);
         while (!queue.isEmpty())
         {
 
-            /* poll() removes the present head.
-            For more information on poll() visit
-            http://www.tutorialspoint.com/java/util/linkedlist_poll.htm */
-            Node tempNode = queue.poll();
-            System.out.print(tempNode.data + " ");
+           int n = queue.size();
+           for(int i=1;i<=n;i++) {
 
-            /*Enqueue left child */
-            if (tempNode.left != null) {
-                queue.add(tempNode.left);
-            }
+               Node tempNode = queue.poll();
+               if(i==1) {
+                   System.out.print(tempNode.data + " ");
+               }
+               /*Enqueue left child */
+               if (tempNode.left != null) {
+                   queue.add(tempNode.left);
+               }
 
-            /*Enqueue right child */
-            if (tempNode.right != null) {
-                queue.add(tempNode.right);
-            }
+               /*Enqueue right child */
+               if (tempNode.right != null) {
+                   queue.add(tempNode.right);
+               }
+           }
         }
     }
 
-    void levelOrder(Node root){
+    static Node prev = null;
 
-        int height = height(root);
-        for(int i=0;i<height;i++){
-            printGivenLevel(root,i);
+    boolean isBST(Node root){
+
+
+        if(root==null){
+            return true;
+        }
+
+        if(!isBST(root.left)){
+            return false;
+        }
+
+        if(prev!=null && root.data <= prev.data)
+            return false;
+
+        prev = root;
+
+        return isBST(root.right);
+
+
+
+    }
+
+    void inOrder1(Node root){
+
+        Stack<Node> s = new Stack<>();
+        Node curr = root;
+
+        while(curr!=null || !s.isEmpty()){
+
+            while(curr!=null){
+                s.add(curr);
+                curr = curr.left;
+            }
+
+            curr = s.pop();
+            // print
+
+            curr = curr.right;
+
         }
 
 
@@ -132,6 +172,16 @@ public class TreeTraversals {
             printGivenLevel(root.left, level - 1);
             printGivenLevel(root.right, level - 1);
         }
+    }
+
+
+    void levelOrder(Node root){
+
+        int height = height(root);
+        for(int i=0;i<height;i++){
+            printGivenLevel(root,i);
+        }
+
     }
 
     private int height(Node root) {
@@ -179,7 +229,6 @@ public class TreeTraversals {
             }
         }
     }
-
 
 }
 

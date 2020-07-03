@@ -20,31 +20,20 @@ public class MaximumSumTree {
 
     }
 
-    static int maximumSum(Node root){
+    private static int maximumSum(Node root) {
 
-        if(root==null){
-            return 0;
-        }
+        int maxSingle;
+        int maxCombined;
 
-        int left = findMaxUtil(root.left);
-        int right = findMaxUtil(root.right);
+        int left = maximumSum(root.left);
+        int right = maximumSum(root.right);
 
-        int maxSum =   Math.max(left + root.data +right, Math.max(left,right));
 
-        return maxSum;
+      //  maxSingle = Math.max(maxSingle,Math.max(left,right));
 
+       // maxCombined = Math.max(maxCombined,left+right+root.data);
+
+        return 0;
     }
-
-    private static int findMaxUtil(Node root) {
-
-        if(root == null){
-            return 0;
-        }
-
-        return root.data + Math.max(findMaxUtil(root.left),findMaxUtil(root.right));
-
-
-    }
-
 
 }
